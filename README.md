@@ -11,8 +11,7 @@ To run the application download currencies-1.0-RELEASE.jar file from Releases.
 
 ## Usage
 
-To start the application go to directory where counter-1.0-RELEASE.jar file is located and enter `java -jar currencies-1
-.0-RELEASE.jar`. The application will prompt for start and end dates input, then it will prompt for currencies code 
+To start the application go to directory where counter-1.0-RELEASE.jar file is located and enter `java -jar currencies-1.0-RELEASE.jar`. The application will prompt for start and end dates input, then it will prompt for currencies code 
 input and after that it will print currencies report to console a result.
 
 Dates input: in format YYYY-MM-DD, separated by spaces.
