@@ -21,7 +21,8 @@ public class ExchangeRateService {
                 .stream()
                 .map(currencyData -> processData(currencyData))
                 .collect(Collectors.toList());
-        outputData(currenciesInfo);
+
+        System.out.println(getReport(currenciesInfo));
     }
 
     private List<CurrencyByDate> processData(InputStream currencyData) {
@@ -37,15 +38,15 @@ public class ExchangeRateService {
             bufferedReader.readLine();
 
             while ((line = bufferedReader.readLine()) != null) {
-                CurrencyByDate currencyByDate = new CurrencyByDate();
                 String[] dataByDate = line.split(DELIMITER);
-                currencyByDate.setName(dataByDate[0].replace("\"", ""));
-                currencyByDate.setCode(dataByDate[1].replace("\"", ""));
-                currencyByDate.setCurrentDayRate(Double.parseDouble(dataByDate[2]
-                        .replace(",", ".")
-                        .replace("\"", "")));
-                currencyByDate.setDate(LocalDate.parse(dataByDate[3].replace("\"", "")));
-
+                CurrencyByDate currencyByDate = new CurrencyByDate(
+                        dataByDate[0].replace("\"", ""),
+                        dataByDate[1].replace("\"", ""),
+                        Double.parseDouble(dataByDate[2]
+                                .replace(",", ".")
+                                .replace("\"", "")),
+                        LocalDate.parse(dataByDate[3].replace("\"", ""))
+                );
                 currencyInfo.add(currencyByDate);
 
             }
@@ -66,15 +67,15 @@ public class ExchangeRateService {
         }
     }
 
-    private void outputData(List<List<CurrencyByDate>> currenciesInfo) {
-        System.out.println("\n");
-        currenciesInfo.forEach(currencyInfo -> {
-            System.out.println(HEADER);
-            System.out.println(outputLine(currencyInfo));
-        });
+    protected String getReport(List<List<CurrencyByDate>> currenciesInfo) {
+        String report = "\n";
+        report += currenciesInfo.stream()
+                .map(currencyInfo -> String.format("%s\n%s", HEADER, getReportLines(currencyInfo)))
+                .collect(Collectors.joining("\n"));
+        return report;
     }
 
-    private String outputLine(List<CurrencyByDate> currencyInfo) {
+    private String getReportLines(List<CurrencyByDate> currencyInfo) {
 
         String lines = "";
 

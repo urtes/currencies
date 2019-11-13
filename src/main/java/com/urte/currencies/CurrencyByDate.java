@@ -9,6 +9,13 @@ public class CurrencyByDate {
     private double currentDayRate;
     private LocalDate date;
 
+    public CurrencyByDate(String name, String code, double currentDayRate, LocalDate date) {
+        this.name = name;
+        this.code = code;
+        this.currentDayRate = currentDayRate;
+        this.date = date;
+    }
+
     public String getName() {
         return name;
     }

@@ -13,7 +13,6 @@ public class DownloadService {
     public List<InputStream> downloadCurrenciesData(List<LocalDate> dates, List<String> currencies) {
 
         List<InputStream> files = new ArrayList<>();
-
         currencies.forEach(currency -> files.add(downloadCurrencyData(currency, dates)));
 
         return files;
@@ -37,6 +36,13 @@ public class DownloadService {
                 "&date_from_day=%s&date_to_day=%s", currency, dateFromDay, dateToDay);
     }
 
+    /**
+     * takes into account only weekends, but not officially stated holidays, since that would require additional
+     * service or external library to catch up with non fixed date holidays like Good Friday, etc.
+     *
+     * @param dateFromDay
+     * @return
+     */
     private LocalDate getFromDay(LocalDate dateFromDay) {
         return dateFromDay.getDayOfWeek() == DayOfWeek.SUNDAY ? dateFromDay.minusDays(2) : dateFromDay.minusDays(1);
     }
