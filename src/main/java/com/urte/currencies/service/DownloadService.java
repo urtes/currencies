@@ -8,13 +8,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service that fetches currency data from external api
+ */
 public class DownloadService {
 
     public List<InputStream> downloadCurrenciesData(List<LocalDate> dates, List<String> currencies) {
-
         List<InputStream> files = new ArrayList<>();
         currencies.forEach(currency -> files.add(downloadCurrencyData(currency, dates)));
-
         return files;
     }
 
@@ -37,11 +38,8 @@ public class DownloadService {
     }
 
     /**
-     * takes into account only weekends, but not officially stated holidays, since that would require additional
+     * Takes into account only weekends, but not officially stated holidays, since that would require additional
      * service or external library to catch up with non fixed date holidays like Good Friday, etc.
-     *
-     * @param dateFromDay
-     * @return
      */
     private LocalDate getFromDay(LocalDate dateFromDay) {
         return dateFromDay.getDayOfWeek() == DayOfWeek.SUNDAY ? dateFromDay.minusDays(2) : dateFromDay.minusDays(1);

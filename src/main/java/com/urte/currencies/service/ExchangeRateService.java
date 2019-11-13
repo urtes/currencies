@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service that processes currency data and outputs report on it
+ */
 public class ExchangeRateService {
 
     private final String HEADER = "Currency Name; Code; Rate; Date; Difference;";
@@ -16,7 +19,6 @@ public class ExchangeRateService {
     DownloadService downloadService = new DownloadService();
 
     public void provideExchangeRateInfo(List<LocalDate> dates, List<String> currencies) {
-
         List<InputStream> currenciesData = downloadService.downloadCurrenciesData(dates, currencies);
 
         List<List<CurrencyByDate>> currenciesInfo = currenciesData
@@ -28,7 +30,6 @@ public class ExchangeRateService {
     }
 
     private List<CurrencyByDate> processData(InputStream currencyData) {
-
         InputStreamReader inputStreamReader = new InputStreamReader(currencyData);
         BufferedReader bufferedReader = null;
         String line;
@@ -78,7 +79,6 @@ public class ExchangeRateService {
     }
 
     private String getReportLines(List<CurrencyByDate> currencyInfo) {
-
         String lines = "";
 
         for (int i = 0; i < currencyInfo.size() - 1; i++) {

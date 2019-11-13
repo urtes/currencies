@@ -2,10 +2,13 @@ package com.urte.currencies.domain;
 
 import java.time.LocalDate;
 
+/**
+ * Represents Currency state on specific date
+ */
 public class CurrencyByDate {
 
     private String name;
-    private  String code;
+    private String code;
     private double currentDayRate;
     private LocalDate date;
 

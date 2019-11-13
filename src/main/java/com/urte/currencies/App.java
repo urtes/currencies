@@ -9,6 +9,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Main class that receives and validates input, if input is valid passes it further
+ */
 public class App
 {
     final static String DELIMITER = " ";
