@@ -23,9 +23,9 @@ public class App
 
         System.out.println("Please enter dates");
 
-        String datesInput = in.nextLine();
+        String dateInput = in.nextLine();
         List<LocalDate> dates = Arrays
-                .stream(datesInput.split(DELIMITER))
+                .stream(dateInput.split(DELIMITER))
                 .map(date -> date.trim())
                 .filter(date -> DATE_PATTERN.matcher(date).matches())
                 .map(date -> LocalDate.parse(date))
@@ -41,9 +41,9 @@ public class App
 
         System.out.println("Please enter currency codes");
 
-        String currenciesInput = in.nextLine();
+        String currencyInput = in.nextLine();
         List<String> currencies = Arrays
-                .stream(currenciesInput.split(DELIMITER))
+                .stream(currencyInput.split(DELIMITER))
                 .map(currency -> currency.trim())
                 .filter(currency -> CURRENCY_PATTERN.matcher(currency).matches())
                 .map(currency -> currency.toUpperCase())
@@ -54,6 +54,9 @@ public class App
         if(currencies.isEmpty()) {
             exit(CURRENCY_ERROR);
         }
+
+        ExchangeRateService exchangeRateService = new ExchangeRateService();
+        exchangeRateService.provideExchangeRateInfo(dates, currencies);
     }
 
     static void exit(String message) {
