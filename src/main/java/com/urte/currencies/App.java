@@ -14,7 +14,7 @@ public class App
     private static Pattern DATE_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     private static Pattern CURRENCY_PATTERN = Pattern.compile("[a-zA-Z]{3}");
 
-    private static String DATE_ERROR = "Enter at least two dates in format YYYY-MM-DD";
+    private static String DATE_ERROR = "Enter two dates in format YYYY-MM-DD";
     private static String CURRENCY_ERROR = "Enter at least one valid currency code";
 
     public static void main( String[] args ) {

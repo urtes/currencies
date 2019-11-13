@@ -31,6 +31,7 @@ public class DownloadService {
 
     private String makeUrlString(List<LocalDate> dates, String currency) {
         return String.format("https://www.lb.lt/lt/currency/exportlist/?csv=1&currency=%s&ff=1&class=Eu&type=day" +
-                "&date_from_day=%s&date_to_day=%s", currency, dates.get(0).toString(), dates.get(1).toString());
+                "&date_from_day=%s&date_to_day=%s", currency, dates.get(0).minusDays(1l).toString(),
+                dates.get(1).toString());
     }
 }
