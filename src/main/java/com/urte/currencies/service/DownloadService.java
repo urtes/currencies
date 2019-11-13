@@ -1,4 +1,4 @@
-package com.urte.currencies;
+package com.urte.currencies.service;
 
 import java.io.IOException;
 import java.io.InputStream;

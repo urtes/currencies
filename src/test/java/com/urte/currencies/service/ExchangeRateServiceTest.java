@@ -1,7 +1,8 @@
-package com.urte.currencies;
+package com.urte.currencies.service;
 
 import static org.junit.Assert.assertTrue;
 
+import com.urte.currencies.domain.CurrencyByDate;
 import org.junit.Test;
 
 import java.time.LocalDate;

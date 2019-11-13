@@ -1,5 +1,7 @@
 package com.urte.currencies;
 
+import com.urte.currencies.service.ExchangeRateService;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;

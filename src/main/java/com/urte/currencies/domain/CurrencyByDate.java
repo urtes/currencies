@@ -1,4 +1,4 @@
-package com.urte.currencies;
+package com.urte.currencies.domain;
 
 import java.time.LocalDate;
 
