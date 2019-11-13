@@ -3,6 +3,7 @@ package com.urte.currencies;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,13 @@ public class DownloadService {
     }
 
     private String makeUrlString(List<LocalDate> dates, String currency) {
+        String dateToDay = dates.get(1).toString();
+        String dateFromDay = getFromDay(dates.get(0)).toString();
         return String.format("https://www.lb.lt/lt/currency/exportlist/?csv=1&currency=%s&ff=1&class=Eu&type=day" +
-                "&date_from_day=%s&date_to_day=%s", currency, dates.get(0).minusDays(1l).toString(),
-                dates.get(1).toString());
+                "&date_from_day=%s&date_to_day=%s", currency, dateFromDay, dateToDay);
+    }
+
+    private LocalDate getFromDay(LocalDate dateFromDay) {
+        return dateFromDay.getDayOfWeek() == DayOfWeek.SUNDAY ? dateFromDay.minusDays(2) : dateFromDay.minusDays(1);
     }
 }

@@ -10,26 +10,25 @@ public class ExchangeRateService {
 
     private final String HEADER = "Currency Name; Code; Rate; Date; Difference;";
     private final String DELIMITER = ";";
-    private List<InputStream> currenciesData = new ArrayList<>();
-    private List<List<CurrencyByDate>> currenciesInfo = new ArrayList<>();
 
     DownloadService downloadService = new DownloadService();
 
     public void provideExchangeRateInfo(List<LocalDate> dates, List<String> currencies) {
 
-        currenciesData = downloadService.downloadCurrenciesData(dates, currencies);
-        currenciesInfo = currenciesData
+        List<InputStream> currenciesData = downloadService.downloadCurrenciesData(dates, currencies);
+
+        List<List<CurrencyByDate>> currenciesInfo = currenciesData
                 .stream()
                 .map(currencyData -> processData(currencyData))
                 .collect(Collectors.toList());
-        outputData();
+        outputData(currenciesInfo);
     }
 
     private List<CurrencyByDate> processData(InputStream currencyData) {
 
         InputStreamReader inputStreamReader = new InputStreamReader(currencyData);
         BufferedReader bufferedReader = null;
-        String line = "";
+        String line;
         List<CurrencyByDate> currencyInfo = new ArrayList<>();
 
         try {
@@ -67,20 +66,26 @@ public class ExchangeRateService {
         }
     }
 
-    private void outputData() {
+    private void outputData(List<List<CurrencyByDate>> currenciesInfo) {
+        System.out.println("\n");
         currenciesInfo.forEach(currencyInfo -> {
             System.out.println(HEADER);
-            outputLine(currencyInfo);
+            System.out.println(outputLine(currencyInfo));
         });
     }
 
-    private void outputLine(List<CurrencyByDate> currencyInfo) {
-        for (int i = 0; i < currencyInfo.size()-1; i++) {
+    private String outputLine(List<CurrencyByDate> currencyInfo) {
+
+        String lines = "";
+
+        for (int i = 0; i < currencyInfo.size() - 1; i++) {
             double currentDayRate = currencyInfo.get(i).getCurrentDayRate();
-            double previousDayRate = currencyInfo.get(i+1).getCurrentDayRate();
+            double previousDayRate = currencyInfo.get(i + 1).getCurrentDayRate();
             double rateDifference = calculateRateDifference(currentDayRate, previousDayRate);
-            System.out.println(String.format("%s; %.4f", currencyInfo.get(i), rateDifference));
+            lines += String.format("%s %.4f;\n", currencyInfo.get(i), rateDifference);
         }
+
+        return  lines;
     }
 
     private double calculateRateDifference(double currentDayRate, double previousDayRate) {
